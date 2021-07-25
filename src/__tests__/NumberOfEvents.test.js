@@ -22,10 +22,13 @@ describe("<NumberOfEvents /> component", () => {
     NumberOfEventsWrapper.setState({
       numberOfEvents: 32,
     });
-    NumberOfEventsWrapper.find(".EventsNumber").simulate("change", {
-      numberOfEvents: 64,
-    });
-    expect(NumberOfEventsWrapper.find(".NumberofEvents")).toBe(64);
+    const targetObject = { target: { value: 15 } };
+
+    NumberOfEventsWrapper.find(".EventsNumber").simulate(
+      "change",
+      targetObject
+    );
+    expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe(15);
   });
 
   test("renders text input correctly", () => {
