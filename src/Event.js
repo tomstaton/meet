@@ -14,9 +14,9 @@ class Event extends Component {
     return (
       <div>
         <ul className="Event">
-          <li className="EventSummary">{event.summary}</li>;
-          <li className="EventLocation">{event.location}</li>;
-          <li className="EventDate">{event.date}</li>
+          <h2 className="EventSummary">{event.summary}</h2>
+          <p className="EventLocation">{event.location}</p>
+          <p className="EventDate">{event.dateTime}</p>
         </ul>
         {this.state.show === true && (
           <p className="EventDetails">{event.description}</p>
