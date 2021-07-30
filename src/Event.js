@@ -13,11 +13,11 @@ class Event extends Component {
     const event = this.props.event;
     return (
       <div>
-        <ul className="Event">
+        <div className="Event">
           <h2 className="EventSummary">{event.summary}</h2>
           <p className="EventLocation">{event.location}</p>
           <p className="EventDate">{event.dateTime}</p>
-        </ul>
+        </div>
         {this.state.show === true && (
           <p className="EventDetails">{event.description}</p>
         )}

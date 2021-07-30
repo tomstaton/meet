@@ -37,4 +37,14 @@ describe("<NumberOfEvents /> component", () => {
       numberOfEvents
     );
   });
+
+  test("change state when input changes", () => {
+    const eventObject = { target: { value: 32 } };
+    NumberOfEventsWrapper.find(".EventsNumber").simulate("change", eventObject);
+    expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe(32);
+  });
+
+  test("show number of events input label", () => {
+    expect(NumberOfEventsWrapper.find(".numberOfEvents label")).toHaveLength(1);
+  });
 });
