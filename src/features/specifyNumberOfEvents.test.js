@@ -1,8 +1,7 @@
 import { loadFeature, defineFeature } from "jest-cucumber";
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import App from "../App";
-import EventList from "../EventList";
 
 const feature = loadFeature("./src/features/specifyNumberOfEvents.feature");
 
@@ -12,18 +11,16 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given("the user has not changed the number of items in the list", () => {
-      EventListWrapper = shallow(<EventList updateEvents={() => {}} />);
-    });
+    given("the user has not changed the number of items in the list", () => {});
 
-    let EventListWrapper;
+    let AppWrapper;
     when("the user opens the app", () => {
-      EventListWrapper = mount(<App />);
+      AppWrapper = mount(<App />);
     });
 
     then("the user should see a list of 32 events", () => {
-      EventListWrapper.update();
-      expect(EventListWrapper.find(".EventsNumber")).toHaveLength(32);
+      AppWrapper.update();
+      expect(AppWrapper.state("numberOfEvents")).toBe(32);
     });
   });
 
@@ -32,14 +29,20 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given("the main page is open", () => {});
-
     let AppWrapper;
-    when("the user specifies a number of events", () => {
-      AppWrapper.update();
-      expect(AppWrapper.find(".EventsNumber")).toHaveLength();
+    given("the main page is open", () => {
+      AppWrapper = mount(<App />);
     });
 
-    then("the user should be shown that number of events", () => {});
+    when("the user specifies a number of events", () => {
+      AppWrapper.find(".EventsNumber").simulate("change", {
+        target: { value: 12 },
+      });
+    });
+
+    then("the user should be shown that number of events", () => {
+      AppWrapper.update();
+      expect(AppWrapper.state("numberOfEvents")).toBe(12);
+    });
   });
 });
