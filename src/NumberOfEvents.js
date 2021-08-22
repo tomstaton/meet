@@ -11,7 +11,7 @@ class NumberOfEvents extends Component {
     const value = event.target.value;
     if (value < 1 || value > 34) {
       return this.setState({
-        infoText: "Must Enter a valid number of events, 1 - 32",
+        infoText: "Must Enter a valid number of events, 1 - 34",
         numberOfEvents: "",
       });
     } else {
