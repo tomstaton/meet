@@ -54,7 +54,6 @@ export const checkToken = async (accessToken) => {
   )
     .then((res) => res.json())
     .catch((error) => error.json());
-
   return result;
 };
 
@@ -64,6 +63,12 @@ export const getEvents = async () => {
   if (window.location.href.startsWith("http://localhost")) {
     NProgress.done();
     return mockData;
+  }
+
+  if (!navigator.onLine) {
+    const data = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return data ? JSON.parse(data).events : [];
   }
 
   const token = await getAccessToken();
