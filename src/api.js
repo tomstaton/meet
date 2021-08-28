@@ -27,7 +27,7 @@ const getToken = async (code) => {
     .then((res) => {
       return res.json();
     })
-    .catch((error) => error);
+    .catch((error) => console.log(error));
 
   access_token && localStorage.setItem("access_token", access_token);
 
@@ -53,7 +53,7 @@ export const checkToken = async (accessToken) => {
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
   )
     .then((res) => res.json())
-    .catch((error) => error.json());
+    .catch((error) => console.log(error));
   return result;
 };
 
@@ -66,19 +66,16 @@ export const getEvents = async () => {
   }
 
   if (!navigator.onLine) {
-    const data = localStorage.getItem("lastEvents");
+    const events = localStorage.getItem("lastEvents");
     NProgress.done();
-    return data ? JSON.parse(data).events : [];
+    return events ? JSON.parse(events).events : [];
   }
 
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
-    const url =
-      "https://dgw77dav94.execute-api.us-east-2.amazonaws.com/dev/api/get-events" +
-      "/" +
-      token;
+    const url = `https://dgw77dav94.execute-api.us-east-2.amazonaws.com/dev/api/get-events/${token}`;
     const result = await axios.get(url);
     if (result.data) {
       var locations = extractLocations(result.data.events);
